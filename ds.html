@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clicker Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        #score {
+            font-size: 24px;
+            margin: 20px;
+        }
+        #clickButton {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #clickButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clicker Game</h1>
+    <p id="score">Очки: 0</p>
+    <button id="clickButton" onclick="increaseScore()">Клікни мене!</button>
+
+    <script>
+        let score = 0;
+        
+        function increaseScore() {
+            score++;
+            document.getElementById('score').innerText = 'Очки: ' + score;
+        }
+    </script>
+</body>
+</html>
