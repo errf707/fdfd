@@ -3,81 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.js"></script>
-    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.umd.min.js"></script>
+    <title>Clicker</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 20px; }
-        .chart-container { width: 100%; height: 200px; }
-        .button { background: blue; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .money {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .click-button {
+            padding: 20px;
+            font-size: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .click-button:hover {
+            background-color: #45a049;
+        }
+        .upgrade-button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .upgrade-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Clicker</h1>
+        <p class="money">Баланс: <span id="balance">$0</span></p>
+        <button class="click-button" onclick="earnMoney()">Заробити гроші</button>
+        <br>
+        <button class="upgrade-button" onclick="buyUpgrade()">Купити апгрейд (+$1 за клік) - $50</button>
+    </div>
 
-    <div id="root"></div>
+    <script>
+        let balance = 0;
+        let earningsPerClick = 1;
 
-    <script type="text/babel">
-        const { useState } = React;
-        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = Recharts;
-        const { FiTrendingUp } = lucideReact;
-
-        const data = [
-            { name: "Jan", value: 400 },
-            { name: "Feb", value: 700 },
-            { name: "Mar", value: 650 },
-            { name: "Apr", value: 800 },
-            { name: "May", value: 900 },
-            { name: "Jun", value: 1200 }
-        ];
-
-        function Dashboard() {
-            return (
-                <div>
-                    <h1>Quantvine-Like Dashboard</h1>
-                    
-                    <div className="card">
-                        <h2>Market Overview</h2>
-                        <div className="chart-container">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={data}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </div>
-
-                    <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div>
-                            <h2>Portfolio Performance</h2>
-                            <p style={{ color: "green", fontSize: "20px", fontWeight: "bold" }}>+12.5%</p>
-                        </div>
-                        <FiTrendingUp size={40} color="green" />
-                    </div>
-
-                    <div className="card">
-                        <h2>Latest News</h2>
-                        <ul>
-                            <li>Stock market sees a 5% increase</li>
-                            <li>Tech sector booming in Q2</li>
-                            <li>New regulations on crypto investments</li>
-                        </ul>
-                    </div>
-
-                    <button className="button">View More Analytics</button>
-                </div>
-            );
+        function earnMoney() {
+            balance += earningsPerClick;
+            updateDisplay();
         }
 
-        ReactDOM.createRoot(document.getElementById("root")).render(<Dashboard />);
-    </script>
+        function buyUpgrade() {
+            if (balance >= 50) {
+                balance -= 50;
+                earningsPerClick += 1;
+                updateDisplay();
+            } else {
+                alert("Недостатньо грошей!");
+            }
+        }
 
+        function updateDisplay() {
+            document.getElementById('balance').textContent = `$${balance}`;
+        }
+    </script>
 </body>
 </html>
