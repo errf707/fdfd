@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/recharts/umd/Recharts.js"></script>
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.umd.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-bottom: 20px; }
+        .chart-container { width: 100%; height: 200px; }
+        .button { background: blue; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        const { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } = Recharts;
+        const { FiTrendingUp } = lucideReact;
+
+        const data = [
+            { name: "Jan", value: 400 },
+            { name: "Feb", value: 700 },
+            { name: "Mar", value: 650 },
+            { name: "Apr", value: 800 },
+            { name: "May", value: 900 },
+            { name: "Jun", value: 1200 }
+        ];
+
+        function Dashboard() {
+            return (
+                <div>
+                    <h1>Quantvine-Like Dashboard</h1>
+                    
+                    <div className="card">
+                        <h2>Market Overview</h2>
+                        <div className="chart-container">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    <div className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div>
+                            <h2>Portfolio Performance</h2>
+                            <p style={{ color: "green", fontSize: "20px", fontWeight: "bold" }}>+12.5%</p>
+                        </div>
+                        <FiTrendingUp size={40} color="green" />
+                    </div>
+
+                    <div className="card">
+                        <h2>Latest News</h2>
+                        <ul>
+                            <li>Stock market sees a 5% increase</li>
+                            <li>Tech sector booming in Q2</li>
+                            <li>New regulations on crypto investments</li>
+                        </ul>
+                    </div>
+
+                    <button className="button">View More Analytics</button>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<Dashboard />);
+    </script>
+
+</body>
+</html>
